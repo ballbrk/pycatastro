@@ -29,7 +29,7 @@ class PyCatastro(object):
 
 
     @classmethod
-    def ConsultaMunicipio(cls, provincia, municipio=None):
+    def ConsultaMunicipio(cls, provincia, municipio=''):
         """Proporciona un listado de todos los municipios de una provincia.
 
             Proporciona un listado de todos los nombres de los municipios de una
@@ -47,10 +47,7 @@ class PyCatastro(object):
         """
 
         params = {'Provincia': provincia}
-        if municipio:
-            params['Municipio'] = municipio
-        else:
-            params['Municipio'] = ''
+        params['Municipio'] = municipio
 
         url = cls.base_url + "/OVCCallejero.asmx/ConsultaMunicipio"
         response = requests.get(url, params=params)
@@ -58,7 +55,7 @@ class PyCatastro(object):
 
 
     @classmethod
-    def ConsultaVia(cls, provincia, municipio, tipovia=None, nombrevia=None):
+    def ConsultaVia(cls, provincia, municipio, tipovia='', nombrevia=''):
         """Proporciona un listado de todas las vías de un municipio.
 
             Proporciona un listado de todas las vías de un municipio (parámetros
@@ -77,14 +74,9 @@ class PyCatastro(object):
 
         params = {'Provincia': provincia,
                   'Municipio': municipio}
-        if tipovia:
-            params['TipoVia'] = tipovia
-        else:
-            params['TipoVia'] = ''
-        if nombrevia:
-            params['NombreVia'] = nombrevia
-        else:
-            params['NombreVia'] = ''
+        params['TipoVia'] = tipovia
+        params['NombreVia'] = nombrevia
+       
 
         url = cls.base_url + "/OVCCallejero.asmx/ConsultaVia"
         response = requests.get(url, params=params)
@@ -121,8 +113,9 @@ class PyCatastro(object):
         url = cls.base_url + "/OVCCallejero.asmx/ConsultaNumero"
         response = requests.get(url, params=params)
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
-
-    def Consulta_DNPLOC(cls, provincia, municipio, sigla, calle, numero, bloque=None, escalera=None, planta=None,puerta=None):
+        
+    @classmethod
+    def Consulta_DNPLOC(cls, provincia, municipio, sigla, calle, numero, bloque='', escalera='', planta='',puerta=''):
         """Proporciona la lista de todos los inmuebles coincidentes o sus datos.
 
             Este servicio puede devolver o bien la lista de todos los inmuebles que
@@ -150,22 +143,10 @@ class PyCatastro(object):
                   'Sigla': sigla,
                   'Calle': calle,
                   'Numero': str(numero)}
-        if bloque:
-            params['Bloque'] = str(bloque)
-        else:
-            params['Bloque'] = ''
-        if escalera:
-            params['Escalera'] = escalera
-        else:
-            params['Escalera'] = ''
-        if planta:
-            params['Planta'] = str(planta)
-        else:
-            params['Planta'] = ''
-        if puerta:
-            params['Puerta'] = str(puerta)
-        else:
-            params['Puerta'] = ''
+        params['Bloque'] = str(bloque)
+        params['Escalera'] = escalera
+        params['Planta'] = str(planta)
+        params['Puerta'] = str(puerta)
 
         url = cls.base_url + "/OVCCallejero.asmx/Consulta_DNPLOC"
         response = requests.get(url, params=params)
@@ -261,7 +242,7 @@ class PyCatastro(object):
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
 
     @classmethod
-    def ConsultaViaCodigos(cls, provincia, municipio, tipovia=None, nombrevia=None):
+    def ConsultaViaCodigos(cls, provincia, municipio, tipovia='', nombrevia=''):
         """Proporciona un listado de las vías de un municipio
 
            Proporciona un listado de todas las vías de un municipio
@@ -284,14 +265,9 @@ class PyCatastro(object):
 
         params = {'Provincia': provincia,
                   'Municipio': municipio}
-        if nombrevia:
-            params['NombreVia'] = nombrevia
-        else:
-            params['NombreVia'] = ''
-        if tipovia:
-            params['TipoVia'] = tipovia
-        else:
-            params['TipoVia'] = ''
+        params['NombreVia'] = nombrevia
+        params['TipoVia'] = tipovia
+        
 
         url = cls.base_url + "/OVCCallejero.asmx/ConsultaVia"
         response = requests.get(url, params=params)
@@ -329,7 +305,7 @@ class PyCatastro(object):
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
 
     @classmethod
-    def Consulta_DNPLOC_Codigos(cls, provincia, municipio, sigla, nombrevia, numero, bloque=None, escalera=None, planta=None, puerta=None):
+    def Consulta_DNPLOC_Codigos(cls, provincia, municipio, sigla, nombrevia, numero, bloque='', escalera='', planta='', puerta=''):
         """Proporciona la lista de todos los inmuebles que coinciden.
 
            Este servicio puede devolver o bien la lista de todos los inmuebles que
@@ -358,23 +334,11 @@ class PyCatastro(object):
             'Sigla': sigla,
             'Calle': nombrevia,
             'Numero': str(numero)}
-        if bloque:
-            params['Bloque'] = bloque
-        else:
-            params['Bloque'] = ''
-        if planta:
-            params['Escalera'] = escalera
-        else:
-            params['Escalera'] = ''
-        if puerta:
-            params['Puerta'] = str(puerta)
-        else:
-            params['Puerta'] = ''
-        if escalera:
-            params['Escalera'] = str(escalera)
-        else:
-            params['Escalera'] = ''
-
+        params['Bloque'] = bloque
+        params['Escalera'] = escalera
+        params['Puerta'] = str(puerta)
+        params['Escalera'] = str(escalera)
+        
         url = cls.base_url + "/OVCCallejero.asmx/Consulta_DNPLOC"
         response = requests.get(url, params=params)
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
