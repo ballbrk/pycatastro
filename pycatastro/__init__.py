@@ -113,7 +113,7 @@ class PyCatastro(object):
         url = cls.base_url + "/OVCCallejero.asmx/ConsultaNumero"
         response = requests.get(url, params=params)
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
-        
+
     @classmethod
     def Consulta_DNPLOC(cls, provincia, municipio, sigla, calle, numero, bloque='', escalera='', planta='',puerta=''):
         """Proporciona la lista de todos los inmuebles coincidentes o sus datos.
@@ -200,20 +200,6 @@ class PyCatastro(object):
         response = requests.get(url, params=params)
         return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
 
-    @classmethod
-    def ConsultaProvincia(cls):
-        """Proporciona un listado de las provincias.
-
-           Proporciona un listado de todas las provincias españolas en las que
-           tiene competencia la Dirección general del Catastro.
-
-           :return: Retorna un dicionario con los datos de la consutla
-           :rtype: dict
-        """
-
-        url = cls.base_url + "/OVCCallejero.asmx/ConsultaProvincia"
-        response = requests.get(url)
-        return xmltodict.parse(response.content, process_namespaces=False, xml_attribs=False)
 
     @classmethod
     def ConsultaMunicipioCodigos(cls, provincia, municipio):
